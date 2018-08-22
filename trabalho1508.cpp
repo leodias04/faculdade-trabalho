@@ -8,6 +8,7 @@ void Entrada();
 void Saida();
 void Ordenacao();
 void Busca();
+void MenuOrdenacao();
 
 #define Max 10
 
@@ -20,6 +21,7 @@ typedef struct _FichaOS{
         
 FichaOS OS[Max];
 int opcao,op_ord,n,op_busca;
+int ordc=0;
 
 main()
 {
@@ -158,6 +160,7 @@ void Crescente()
                    OS[j] = OSAux;
                 }
      printf("\nDados Ordenados\n");
+     ordc=1;
      getch();
 }
 
@@ -244,6 +247,12 @@ void Binaria()
     e=0;
     d=n-1;
     encontrou=0;
+    if(ordc==0)
+    {
+               printf("Dados nao ordenados, deseja ordenar?");
+               
+               
+    }
     while((e<=d)&&(!encontrou))
     {
         m=(e+d)/2;
