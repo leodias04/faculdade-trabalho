@@ -1,0 +1,287 @@
+#include <conio.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+void MenuPrincipal();
+void LISTAGEM();
+void EMPILHAR();
+void EXIBIRTOPO();
+void DESEMPILHAR();
+void ESVAZIAR();
+void TROCARPILHA();
+void EXERCICIOS();
+//=======================
+#define MAX 10
+typedef int telem;
+
+typedef struct {
+	  telem v[MAX];
+	  int topo;
+	} tpilha;
+//=======================
+void criar (tpilha *P);
+int vazia (tpilha P);
+int cheia (tpilha P);
+int tamanho (tpilha P);
+int elemtopo (tpilha P, telem *dado);
+int push (tpilha *P, telem dado);
+int pop (tpilha *P, telem *dado);
+void imprimir (tpilha *P);
+
+
+
+//=======================
+tpilha NUMEROS[2];
+int opcao,pilha=0;
+
+main()
+{
+      int fim=0;
+      criar (&NUMEROS[0]);  
+      criar (&NUMEROS[1]);      
+      do
+      {
+         MenuPrincipal();      
+         switch (opcao)
+         {
+             case 1:EMPILHAR();
+                    break;
+             case 2:DESEMPILHAR();
+                    break;
+             case 3:EXIBIRTOPO();
+                    break;
+             case 4:LISTAGEM();
+                    break;
+             case 5:ESVAZIAR();
+                    break;
+             case 6:EXERCICIOS();
+                    break;
+             case 7:pilha = !(pilha);
+                    printf("\n\nA pilha %d esta ativa.",pilha);
+                    getch();             
+                    break;
+             case 9:fim=1;
+                    break;
+             default: printf("Opcao invalida\n");
+                      getch();
+         }
+      }while (!(fim));
+      printf("Fim do programa");
+      getch();
+}
+
+
+// EXERCICIOS
+void EXERCICIOS()
+{
+      void Menusub();
+      void EXER01();
+      void EXER02();
+      int fim_sub=0,op_sub;
+      do
+      {
+         Menusub();      
+         scanf("%d",&op_sub);
+         switch (op_sub)
+         {
+             case 1:EXER01();
+                    break;
+             case 2:EXER02();
+                    break;
+             case 9:fim_sub=1;
+                    break;
+             default: printf("Opcao invalida\n");
+                      getch();
+         }
+      }while (!(fim_sub));
+}
+
+void Menusub()
+{
+     system("cls");
+     printf("         M E N U   SUB\n");
+     printf("\n1 - EXERCICIO 01\n");
+     printf("\n2 - EXERCICIO 02\n");
+     printf("\n9 - Sair\n");
+     printf("\nEscolha uma das opcoes:");
+}
+     int elemMaior (tpilha P,telem *dado)
+{
+     int i;
+     if (vazia(P)) return(0);
+     *dado = P.v[P.topo];
+     for (i=P.topo-1;i>=0;i--)
+         if (P.v[1]>*dado)
+         *dado=P.v[1];
+         return 1;
+}
+void EXER01()
+{
+ telem num;
+ system("cls");
+ printf("              E L E M E N T O  M A I O R\n  ");
+ if(!(elemMaior(NUMEROS[pilha],&num)))
+{
+     printf("NENHUM NUMERO INSERIDO");
+     getch();
+     return;
+  }
+  printf("O numero %d e o Maior elemento da pilha %d",num,pilha);
+  getch();
+}
+
+void EXER02()
+{
+
+}
+
+// FIM ROTINAS DE EXERCICIOS
+
+void MenuPrincipal()
+{
+     system("cls");
+     printf("         EDITOR DE PILHA\n");
+     printf("\n1 - EMPILHAR\n");
+     printf("\n2 - DESEMPILHAR\n");
+     printf("\n3 - EXIBIR ELEMENTO DO TOPO\n");
+     printf("\n4 - EXIBIR PILHA\n");     
+     printf("\n5 - ESVAZIAR\n");          
+     printf("\n6 - EXERCICIOS EXTRAS\n");
+     printf("\n7 - TROCAR PILHA\n");     
+     printf("\n9 - SAIR\n");
+     printf("\nDIGITE SUA OPCAO:");
+     scanf("%d",&opcao);
+}
+void EXIBIRTOPO()
+{
+     telem num;
+     system("cls");
+     printf("           T O P O  D A  P I L H A\n");
+     if (!(elemtopo (NUMEROS[pilha], &num))) 
+       {
+         printf("NENHUM NUMERO INSERIDO");
+         getch();
+         return;
+       }
+     printf("O numero %d esta no topo da pilha.",num);
+     getch();
+}
+
+void EMPILHAR()
+{
+     telem num;
+     int posicao;
+     system("cls");
+     printf("           E M P I L H A R  D A D O\n");         
+     printf("Digite um numero inteiro:");
+     scanf("%d",&num);
+     if (!(push (&NUMEROS[pilha],num)))
+             {
+               printf("NUMERO MAXIMO DE ELEMENTOS INSERIDOS");
+               getch();
+               return;
+             }
+     printf("O numero %d foi empilhado na posicao %d.",NUMEROS[pilha].v[NUMEROS[pilha].topo],NUMEROS[pilha].topo);
+     getch();
+}
+void LISTAGEM()
+{
+     system("cls");
+     printf("         S A I D A  D E  D A D O S  -  L I S T A G E M  => P I L H A : %d\n",pilha);
+     printf("Posicao         Numeros\n");
+     if (vazia(NUMEROS[pilha])) 
+       {
+         printf("NENHUM NUMERO INSERIDO");
+         getch();
+         return;
+       }         
+     imprimir(&NUMEROS[pilha]); 
+     getch();
+}
+
+
+void DESEMPILHAR()
+{
+     telem num;
+     system("cls");
+     printf("           D E S E M P I L H A R  D A D O\n");         
+     if (!(pop(&NUMEROS[pilha],&num)))
+             {
+               printf("PILHA VAZIA");
+               getch();
+               return;
+             }
+             else
+             {
+               printf("O numero %d foi desempilhado da pilha.",num);
+             }
+     getch();             
+}
+
+void ESVAZIAR()
+{
+     telem num;
+     system("cls");
+     if (vazia(NUMEROS[pilha])) 
+       {
+         printf("NENHUM NUMERO INSERIDO");
+         getch();
+         return;
+       }
+
+     while (!(tamanho(NUMEROS[pilha])==0)) // falta a funcao tamanho
+       {                            // enquanto nao vazia...
+         pop (&NUMEROS[pilha], &num);        
+       }
+     printf("PILHA ESVAZIADA");
+     getch();
+}
+//============================
+void imprimir (tpilha *P) {
+
+int i;
+for (i=P->topo; i>=0; i--)
+   {
+     printf("%4d %16d\n",i,P -> v[i]);
+   }
+return;
+}
+
+//============================
+void criar (tpilha *P){
+   P->topo=-1;
+}
+//============================
+int vazia (tpilha P){
+   return (P.topo == -1);
+}
+//============================
+int cheia (tpilha P){
+   return (P.topo + 1 == MAX);
+}
+//============================
+int tamanho (tpilha P){
+   return (P.topo+1);
+}
+//============================
+int elemtopo (tpilha P, telem *dado) 
+{
+    if (vazia(P)) return (0);
+    *dado = P.v[P.topo];
+    return 1;
+}
+//============================
+int push (tpilha *P, telem dado) 
+{
+    if (P->topo==MAX-1) return (0);
+    P-> v[++P->topo]= dado;
+    return 1;
+}
+//============================
+int pop (tpilha *P, telem *dado) 
+{
+    if (vazia(*P)) return (0);
+    *dado = P->v[P->topo--];
+    return 1;
+}
