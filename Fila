@@ -1,0 +1,210 @@
+#include <conio.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+void MenuPrincipal();
+void Listagem();
+void Entrada();
+void Incluir();
+void Excluir();
+void Esvaziar();
+//void Imprimir();
+
+#define  MAX 20
+typedef struct  {
+        Os v[MAX];
+        int inicio;
+        int final;
+        }tfila;
+        
+void criar (tfila *F);
+int vazia (tfila F);
+int cheia (tfila F);
+int tamanho (tfila F);
+int inserir (tfila *F, int pos, Os dado);
+int remover (tfila *F,int pos, Os *dado);
+void imprimir (tfila *F);
+
+tfila NUMEROS;
+int opcao;
+
+void MenuPrincipal()
+{
+     system("cls");
+     printf("          Editor de lista\n");
+     printf("\n1 - Exibir lista\n");
+     printf("\n2 - Adicionar\n");
+     printf("\n3 - Incluir\n");
+     printf("\n4 - Remover\n");
+     printf("\n5 - Esvaziar\n");
+     printf("\n6 - Sair\n");
+     printf("\nDigite sua opcao:");
+     scanf("%d", &opcao);
+}
+
+main()
+{
+      int fim =0;
+      criar (&NUMEROS);
+      do
+      {
+         MenuPrincipal();
+         switch (opcao)
+         {
+                case 1: Listagem();
+                     break;
+                case 2: Entrada();
+                     break;
+                case 3: Incluir();
+                     break;
+                case 4: Excluir();
+                     break;
+                case 5: Esvaziar ();
+                     break;
+                case 6: fim=1;
+                     break;
+                default: printf("opcao invalida\n");
+                         getch();    
+         }
+      }while (!(fim));
+      printf("Fim do programa");
+      getch();
+}
+void Entrada()
+{
+     Os num;
+     system("cls");
+     printf("       E N T R A D A  D E  D A D O S\n");
+     printf("Digite o numero da Os:");
+     scanf("%d",&num.n_os);
+     while (!(num.n_os==0))
+     {
+           printf("Digite o valor da Os:");
+           scanf("%f",&num.valor);
+           
+           if (!(inserir(&NUMEROS,tamanho(NUMEROS)+1,num)))
+           {
+              printf("Numero maximo de OS inseridos");
+              getch();
+              return;
+           }
+       printf("Digite o numero da Os(zero para terminar):" );
+       scanf("%d",&num.n_os);
+     }
+}
+void Listagem()
+{
+    system("cls");   
+    printf("       S A I D A  D E  D A D O S -  L I S T A G E M \n");
+    printf("Numero da Os    Valor da Os\n");
+    if(vazia(NUMEROS))
+       {
+           printf("nenhum numero inserido");
+           getch();
+           return;
+       }
+     imprimir(&NUMEROS);
+     getch();     
+}
+void Incluir()
+{
+    Os num;
+    int posicao;
+    system("cls");     
+    printf("       I N C L U I R   D A D O\n");
+    printf("digite um numero da Os:");
+    scanf("%d",&num.n_os);
+    printf("digite valor da Os:");
+    scanf("%f",&num.valor);
+    printf("Digite a posicao da inclusao:");
+    scanf("%d",&posicao);
+    if(!(inserir(&NUMEROS,posicao,num)))
+        {
+           printf("Numero maximo de elementos inseridos ou posicao invalida");
+           getch();
+           return;
+        }
+}
+void Excluir()
+{
+Os num;
+    int posicao;
+    system("cls");     
+    printf("       E X C L U I R   D A D O\n");
+    printf("Digite a posicao da exclusao:");
+    scanf("%d",&posicao);
+    if(!(remover(&NUMEROS,posicao,&num)))
+        {
+          printf("Posicao invalida");
+          getch();
+          return;
+        }     
+          else
+          {
+            printf("O numero  da Os %d foi excluido  da lista.",num.n_os);
+          }    
+     getch();    
+}
+void Esvaziar()
+{
+	Os num;
+    system("cls");   
+     if(vazia(NUMEROS))
+       {
+           printf("nenhum numero inserido");
+           getch();
+           return;
+       }
+    while (!(tamanho(NUMEROS)==0))
+          {
+            remover(&NUMEROS, tamanho(NUMEROS), &num);
+          }
+    printf ("A lista esvaziada");
+      getch();     
+}
+void imprimir(tfila *F)
+{
+ int i;
+ for(i=0; i<=(F->n)-1;i++)
+  {
+          printf("%4d %16.1f\n",F-> v[i].n_os,F->v[i].valor);
+  }     
+  return;
+}
+
+void criar (tfila *F)
+{
+     F->n=0;
+}
+int vazia (tfila F)
+{
+    return (F.n ==0);
+}
+int cheia (tfila F)
+{
+    return (F.n==0);
+}
+int tamanho (tfila F)
+{
+ return (F.n);    
+}
+int inserir (tfila * F, int pos, Os dado)
+{
+int i;
+    if(( F->n==MAX) || (pos> F->n+1)) return (0);
+	for(i=F->n; i>=pos; i--)
+		F->v[i] = F->v[i-1];
+	F->v[pos-1]= dado;
+	 (F->n)++;
+	 return (1); 
+}
+int remover (tfila *F, int pos, Os *dado){
+int i;
+if((pos>F->n)||(pos<=0)) return(0);
+*dado=F->v[pos-1];
+for (i=pos; i<=(F->n)-1;i++)
+	F->v[i-1]= F->v[i];
+	(F->n)--;
+	return(1);
+}
