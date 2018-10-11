@@ -12,8 +12,9 @@ void Esvaziar();
 //void Imprimir();
 
 #define  MAX 20
+typedef  int telem;
 typedef struct  {
-        Os v[MAX];
+        telem v[MAX];
         int inicio;
         int final;
         }tfila;
@@ -22,8 +23,8 @@ void criar (tfila *F);
 int vazia (tfila F);
 int cheia (tfila F);
 int tamanho (tfila F);
-int inserir (tfila *F, int pos, Os dado);
-int remover (tfila *F,int pos, Os *dado);
+int inserir (tfila *F, int pos, telem valor);
+int remover (tfila *F,int pos, telem *valor);
 void imprimir (tfila *F);
 
 tfila NUMEROS;
@@ -73,12 +74,12 @@ main()
 }
 void Entrada()
 {
-     Os num;
+     telem num;
      system("cls");
      printf("       E N T R A D A  D E  D A D O S\n");
      printf("Digite o numero da Os:");
-     scanf("%d",&num.n_os);
-     while (!(num.n_os==0))
+     scanf("%d",&num);
+     while (!(num ==0))
      {
            printf("Digite o valor da Os:");
            scanf("%f",&num.valor);
@@ -175,11 +176,12 @@ void imprimir(tfila *F)
 
 void criar (tfila *F)
 {
-     F->n=0;
+     F->inicio=0;
+     F->final= -1;
 }
 int vazia (tfila F)
 {
-    return (F.n ==0);
+    return (F.inicio>F.final);
 }
 int cheia (tfila F)
 {
@@ -189,22 +191,25 @@ int tamanho (tfila F)
 {
  return (F.n);    
 }
-int inserir (tfila * F, int pos, Os dado)
+int primeiro(tfila F, telem *dado)
 {
-int i;
-    if(( F->n==MAX) || (pos> F->n+1)) return (0);
-	for(i=F->n; i>=pos; i--)
-		F->v[i] = F->v[i-1];
-	F->v[pos-1]= dado;
-	 (F->n)++;
+    if(vazia (F)) return 0;
+    *dado = F.v[F.inicio];
+    return (1);
+}
+int inserir (tfila * F, telem valor)
+{
+
+    if(( F-> == MAX - 1)return (0);
+	     (F->final)++;
+	     F->[F->final] = valor;
 	 return (1); 
 }
-int remover (tfila *F, int pos, Os *dado){
-int i;
-if((pos>F->n)||(pos<=0)) return(0);
-*dado=F->v[pos-1];
-for (i=pos; i<=(F->n)-1;i++)
-	F->v[i-1]= F->v[i];
-	(F->n)--;
+int remover (tfila *F, telem *valor)
+{
+if(vazia(*F))return 0;
+   primeiro(*F,valor);
+   (F->inicio)++;
 	return(1);
 }
+
