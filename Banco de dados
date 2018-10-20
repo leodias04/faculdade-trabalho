@@ -1,0 +1,23 @@
+create table Aluno (
+AlunoID int not null,
+Nome varchar(60) not null,
+Endereco varchar(50),
+CPF int not null, 
+Matricula int not null,
+primary key (AlunoID)
+);
+
+create table Disciplina (
+DisciplinaID int not null,
+NomeDisciplina varchar(60),
+primary key
+);
+
+create table Inscricao(
+InscricaoID int not null,
+DisciplinaID int ,
+AlunoID int ,
+primary key(InscricaoID),
+foreign key (DisciplinaID) references Disciplina(DisciplinaID),
+foreign key (AlunoID) references Aluno(AlunoID)
+);
