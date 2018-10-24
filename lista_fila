@@ -163,7 +163,7 @@ void EXCLUIR()
 		}
 		else
 		{
-			printf("O número %d foi excluído da lista.", num);
+			printf("O número %d foi excluído da fila.", num);
 			
 		}
 		getch();
