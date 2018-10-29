@@ -1,0 +1,202 @@
+#include<stdio.h>
+#include<conio.h>
+#include<stdlib.h>
+#include<string.h>
+#include<locale.h> //para fazer as acentuações funcionarem
+/*Feito por Livia Dantas - Deus está vendo o seu CTRL + C!*/
+//criando os menus
+void MenuPrincipal();
+void LISTAGEM ();
+void ENTRADA ();
+void INCLUIR ();
+void EXCLUIR ();
+void ESVAZIAR ();
+
+//==================================
+//definindo a estrutura da lista
+//==================================
+#define MAX 10
+typedef int telem;
+typedef struct {
+	telem v[MAX];
+	int inicio;
+	int final;
+	int tam;
+} tfila;
+
+//===================================
+//criando as listas e as funções - Essa parte está no slide
+//===================================
+void criar (tfila *F){
+	F->inicio=0; //vai criar uma fila vazia
+	F->final=-1;
+	F->tam=0;
+}; 
+int vazia (tfila F){
+	return(F.tam==0);  //vai considerar a fila como vazia
+};
+int primeiro (tfila F, telem *dado){ //obten o  elemento do inicio da fila 
+	if(vazia(F)) return 0; /* erro fila vazia*/
+	*dado = F.v[F.inicio];
+	return (1);
+}
+int inserir (tfila *F, telem valor){
+	/*insere um elemento até  o fim da fila*/
+	if(F->tam==MAX) return 0; 
+	{
+		(F->tam)++;
+		F->final = (F->final+1) % MAX;
+		F->v[F->final] = valor;
+		return(1);
+	}
+}
+int remover (tfila *F, telem *valor){
+	/*remove o elemento do inicio de uma fila, retornando o elemento removido*/
+	if (vazia(*F)) return 0; //erro a lista esta vazia
+	primeiro (*F, valor);
+	(F->tam)--;
+	F->inicio = (F->inicio +1)% MAX;
+	return(1);
+}
+void imprimir (tfila * F);
+//=====================================
+//GERANDO AS OPÇÕES DO MENUZINHO
+tfila NUMEROS;
+int opcao;
+main ()
+{
+	setlocale(LC_ALL, "Portuguese");
+	int fim=0;
+	criar (&NUMEROS);
+	do
+	{
+		MenuPrincipal();
+		switch(opcao)
+		{
+			case 1: LISTAGEM();
+					break;
+			case 2: ENTRADA();
+					break;
+			case 3: INCLUIR();
+					break;
+			case 4: EXCLUIR();
+					break;
+			case 5: ESVAZIAR();
+					break;
+			case 6: fim=1;
+					break;
+			default: printf("Opção inválida");
+					getch();
+			
+		}
+	}while(!(fim));
+	printf("Fim do programa");
+			getch();
+}
+void MenuPrincipal(){
+	system("cls");
+	printf("     EDITOR DE FILA \n");
+	printf("\n1 - EXIBIR FILA\n");
+	printf("\n2 - ADICIONAR \n");
+	//printf("\n3 - INCLUIR\n");
+	printf("\n4 - REMOVER\n");
+	printf("\n5 - ESVAZIAR\n");
+	printf("\n6 - SAIR\n");
+	printf("\n DIGITE A SUA OPÇÃO...");
+	scanf("%d", &opcao);
+}
+void ENTRADA()
+{
+	telem num;
+	system ("cls");
+	printf("                   E N T R A D A   D E   D A D O S\n ");
+	printf("Digite um número inteiro (zero para terminar):");
+	scanf("%d", &num);
+	while(!(num==0))
+	{
+		if(!(inserir (&NUMEROS,num)))
+		{
+			printf("NUMERO MAXIMO DE ELEMENTOS INSERIDOS");
+			getch();
+			return;
+		}
+	printf("Digite um numero inteiro (zero para terminar):");
+	scanf("%d", &num);	
+		}
+	}
+void LISTAGEM()
+{
+	system("cls");
+	printf("			S A I D A     D E    D A D O S  -  F I L A \n");
+	printf("Posição      Numeros\n");
+	if(vazia(NUMEROS))
+	{
+		printf("NENHUM NUMERO INSERIDO");
+		getch();
+		return;
+	}
+	imprimir (&NUMEROS);
+	getch();
+}
+void INCLUIR()
+{
+	telem num;
+	system("cls");
+	printf("			I N C L U I R   D A D O\n");
+	printf("Digite um numero inteiro: ");
+	scanf("%d", &num);
+	if(!(inserir (&NUMEROS,num)))
+		{
+			printf("NUMERO MAXIMO DE ELEMENTOS INSERIDOS OU POSICAO INVALIDA");
+			getch();
+			return;
+		}
+}
+void EXCLUIR()
+{
+	telem num;
+	system("cls");
+	printf("           E X C L U I R  D A D O\n");
+	printf("Digite posição de exclusão:");
+	scanf("%d", &num);
+	if(!(remover(&NUMEROS, &num)))
+		{
+			printf("POSIÇÃO INVÁLIDA");
+			getch();
+			return;
+		}
+		else
+		{
+			printf("O número %d foi excluído da fila.", num);
+			
+		}
+		getch();
+}
+
+void ESVAZIAR()
+{
+	telem num;
+	int posicao;
+	system("cls");
+	if(vazia(NUMEROS))
+	{
+		printf("NENHUM NUMERO INSERIDO");
+		getch();
+		return;
+	}
+	
+     while (!vazia(NUMEROS)==0)
+     {
+     	remover(&NUMEROS, &num);
+	 }
+	 printf("LISTA ESVAZIADA");
+	 getch();
+}
+
+void imprimir (tfila *F){
+	int i;
+	for (i=0; i<=(F->final)-1;i++){
+		printf("%4d %16d\n", i+1, F -> v[i]);
+	}
+	return;
+}
