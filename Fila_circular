@@ -195,8 +195,8 @@ void ESVAZIAR()
 
 void imprimir (tfila *F){
 	int i;
-	for (i=0; i<=(F->final)-1;i++){
-		printf("%4d %16d\n", i+1, F -> v[i]);
+	for (i=0; i<=(F->final);i++){
+		printf("%4d %16d\n", i, F -> v[i]);
 	}
 	return;
 }
