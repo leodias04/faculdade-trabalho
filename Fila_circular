@@ -15,7 +15,7 @@ void ESVAZIAR ();
 //==================================
 //definindo a estrutura da lista
 //==================================
-#define MAX 10
+#define MAX 3
 typedef int telem;
 typedef struct {
 	telem v[MAX];
@@ -30,10 +30,10 @@ typedef struct {
 void criar (tfila *F){
 	F->inicio=0; //vai criar uma fila vazia
 	F->final=-1;
-	F->tam=0;
+	F->tam = 0;
 }; 
 int vazia (tfila F){
-	return(F.tam==0);  //vai considerar a fila como vazia
+	return(F.tam==0);  //testa se uma fila está vazia
 };
 int primeiro (tfila F, telem *dado){ //obten o  elemento do inicio da fila 
 	if(vazia(F)) return 0; /* erro fila vazia*/
@@ -41,12 +41,12 @@ int primeiro (tfila F, telem *dado){ //obten o  elemento do inicio da fila
 	return (1);
 }
 int inserir (tfila *F, telem valor){
-	/*insere um elemento até  o fim da fila*/
+	/*insere um elemento no fim da fila*/
 	if(F->tam==MAX) return 0; 
 	{
 		(F->tam)++;
-		F->final = (F->final+1) % MAX;
-		F->v[F->final] = valor;
+		F->final=(F->final+1) % MAX;
+		F->v[F->final]=valor;
 		return(1);
 	}
 }
@@ -55,7 +55,7 @@ int remover (tfila *F, telem *valor){
 	if (vazia(*F)) return 0; //erro a lista esta vazia
 	primeiro (*F, valor);
 	(F->tam)--;
-	F->inicio = (F->inicio +1)% MAX;
+	F->inicio=(F->inicio+1)% MAX;
 	return(1);
 }
 void imprimir (tfila * F);
@@ -98,7 +98,6 @@ void MenuPrincipal(){
 	printf("     EDITOR DE FILA \n");
 	printf("\n1 - EXIBIR FILA\n");
 	printf("\n2 - ADICIONAR \n");
-	//printf("\n3 - INCLUIR\n");
 	printf("\n4 - REMOVER\n");
 	printf("\n5 - ESVAZIAR\n");
 	printf("\n6 - SAIR\n");
@@ -110,20 +109,17 @@ void ENTRADA()
 	telem num;
 	system ("cls");
 	printf("                   E N T R A D A   D E   D A D O S\n ");
-	printf("Digite um número inteiro (zero para terminar):");
+	printf("Digite um número inteiro:");
 	scanf("%d", &num);
-	while(!(num==0))
-	{
+
 		if(!(inserir (&NUMEROS,num)))
 		{
 			printf("NUMERO MAXIMO DE ELEMENTOS INSERIDOS");
 			getch();
 			return;
 		}
-	printf("Digite um numero inteiro (zero para terminar):");
-	scanf("%d", &num);	
-		}
-	}
+	
+}
 void LISTAGEM()
 {
 	system("cls");
@@ -147,7 +143,7 @@ void INCLUIR()
 	scanf("%d", &num);
 	if(!(inserir (&NUMEROS,num)))
 		{
-			printf("NUMERO MAXIMO DE ELEMENTOS INSERIDOS OU POSICAO INVALIDA");
+			printf("NUMERO MAXIMO DE ELEMENTOS INSERIDOS ");
 			getch();
 			return;
 		}
@@ -157,8 +153,6 @@ void EXCLUIR()
 	telem num;
 	system("cls");
 	printf("           E X C L U I R  D A D O\n");
-	printf("Digite posição de exclusão:");
-	scanf("%d", &num);
 	if(!(remover(&NUMEROS, &num)))
 		{
 			printf("POSIÇÃO INVÁLIDA");
@@ -185,7 +179,7 @@ void ESVAZIAR()
 		return;
 	}
 	
-     while (!vazia(NUMEROS)==0)
+     while (vazia(NUMEROS)==0)
      {
      	remover(&NUMEROS, &num);
 	 }
@@ -193,9 +187,11 @@ void ESVAZIAR()
 	 getch();
 }
 
-void imprimir (tfila *F){
+void imprimir (tfila *F)
+{
 	int i;
-	for (i=0; i<=(F->final);i++){
+	for (i=(F->inicio); i<=(F->final);i++)
+	{
 		printf("%4d %16d\n", i, F -> v[i]);
 	}
 	return;
