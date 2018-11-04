@@ -94,7 +94,6 @@ void MenuPrincipal(){
 	printf("     EDITOR DE FILA \n");
 	printf("\n1 - EXIBIR FILA\n");
 	printf("\n2 - ADICIONAR \n");
-	//printf("\n3 - INCLUIR\n");
 	printf("\n4 - REMOVER\n");
 	printf("\n5 - ESVAZIAR\n");
 	printf("\n6 - SAIR\n");
@@ -176,7 +175,7 @@ void ESVAZIAR()
 		return;
 	}
 	
-     while (!vazia(NUMEROS)==0)
+     while (vazia(NUMEROS)==0)
      {
      	remover(&NUMEROS, &num);
 	 }
