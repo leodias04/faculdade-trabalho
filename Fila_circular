@@ -190,9 +190,23 @@ void ESVAZIAR()
 void imprimir (tfila *F)
 {
 	int i;
-	for (i=(F->inicio); i<=(F->final);i++)
-	{
-		printf("%4d %16d\n", i, F -> v[i]);
-	}
-	return;
+	if((F->inicio)<=(F->final)){
+                             for(i=(F->inicio);i<=(F->final);i++)
+                                    {
+                                    printf("%4d   %12d\n",i,F -> v[i]);
+                                    } 
+                             }    
+else{
+     i=(F->inicio);
+     while(i<MAX){
+                     printf("%4d   %12d\n",i,F -> v[i]);
+                     i++;
+                     }
+     i=0;
+     while(i<=(F->final)){
+                            printf("%4d   %12d\n",i,F -> v[i]);
+                             i++;      
+                         }
+     }     
+return;
 }
