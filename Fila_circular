@@ -8,6 +8,7 @@
 void MenuPrincipal();
 void LISTAGEM ();
 void ENTRADA ();
+void PRIMEIRO();
 void INCLUIR ();
 void EXCLUIR ();
 void ESVAZIAR ();
@@ -77,7 +78,7 @@ main ()
 					break;
 			case 2: ENTRADA();
 					break;
-			case 3: INCLUIR();
+			case 3: PRIMEIRO();
 					break;
 			case 4: EXCLUIR();
 					break;
@@ -97,7 +98,8 @@ void MenuPrincipal(){
 	system("cls");
 	printf("     EDITOR DE FILA \n");
 	printf("\n1 - EXIBIR FILA\n");
-	printf("\n2 - ADICIONAR \n");
+	printf("\n2 - ADICIONAR\n");
+	printf("\n3 - PRIMEIRO ELEMENTO\n");
 	printf("\n4 - REMOVER\n");
 	printf("\n5 - ESVAZIAR\n");
 	printf("\n6 - SAIR\n");
@@ -119,6 +121,22 @@ void ENTRADA()
 			return;
 		}
 	
+}
+void PRIMEIRO()
+{
+	telem num;
+	system("cls");
+	printf("			      P R I M E I R O   D A   F I L A S\n");
+	printf("Posição      Numeros\n");
+	if(!(primeiro(NUMEROS, &num)))
+	{
+		printf("NENHUM NUMERO INSERIDO");
+		getch();
+		return;
+	}
+	else
+		printf("O numero %d esta é o primeiro da fila.",num);
+	getch();
 }
 void LISTAGEM()
 {
