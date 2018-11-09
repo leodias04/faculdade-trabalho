@@ -1,0 +1,36 @@
+create table Category(
+CategoryID int not null auto_increment,
+CategoryName varchar(60) not null,
+Description varchar(100),
+Primary key (CategoryID)
+);
+
+create table Employee(
+EmployeeID int not null auto_increment,
+LastName varchar(60) not null,
+FirstName varchar(60) not null,
+BirthDate varchar(10) not null,
+Photo varchar(20) not null,
+Notes varchar(255) not null,
+Primary key (EmployeeID)
+);
+
+create table Product(
+ProductID int not null auto_increment,
+ProductName varchar(60) not null,
+SupplierID int not null,
+CategoryID int,
+Unit varchar(20) not null,
+Price int not null,
+Primary key (ProductID),
+category);
+
+create table Product(
+ProductID int not null auto_increment,
+ProductName varchar(60) not null,
+SupplierID int not null,
+CategoryID int,
+Unit varchar(20) not null,
+Price int not null,
+Primary key (ProductID),
+category);
