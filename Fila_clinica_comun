@@ -1,0 +1,184 @@
+#include<stdio.h>
+#include<conio.h>
+#include<stdlib.h>
+#include<string.h>
+#include<locale.h> //para fazer as acentuações funcionarem
+//criando os menus
+void MenuPrincipal();
+void LISTAGEM ();
+void ENTRADA ();
+void EXCLUIR ();
+void ESVAZIAR ();
+
+//==================================
+//definindo a estrutura da lista
+//==================================
+#define MAX 5
+typedef struct{
+        char nome[50];
+        int idade;
+        int limite;
+        }telem;
+
+typedef struct {
+	telem v[MAX];
+	int inicio;
+	int final;
+} tfila;
+
+//===================================
+//criando as listas e as funções - Essa parte está no slide
+//===================================
+void criar (tfila *F){
+	F->inicio=0; //vai criar uma fila vazia
+	F->final=-1;
+}; 
+int vazia (tfila F){
+	return(F.inicio > F.final);  //vai considerar a fila como vazia
+};
+int primeiro (tfila F, telem *dado){ //obten o  elemento do inicio da fila 
+	if(vazia(F)) return 0; /* erro fila vazia*/
+	*dado = F.v[F.inicio];
+	return (1);
+}
+int inserir (tfila *F, telem valor){
+	/*insere um elemento até  o fim da fila*/
+	if(F->final==MAX-1) return 0; 
+	{
+		(F->final)++;
+		F->v[F->final]=valor;
+		return(1);
+	}
+}
+int remover (tfila *F, telem *valor){
+	/*remove o elemento do inicio de uma fila, retornando o elemento removido*/
+	if (vazia(*F)) return 0; //erro a lista esta vazia
+	primeiro (*F, valor);
+	(F->inicio)++;
+	return(1);
+}
+void imprimir (tfila * F);
+//=====================================
+//GERANDO AS OPÇÕES DO MENUZINHO
+tfila PACIENTES;
+int opcao;
+main ()
+{
+	setlocale(LC_ALL, "Portuguese");
+	int fim=0;
+	criar (&PACIENTES);
+	do
+	{
+		MenuPrincipal();
+		switch(opcao)
+		{
+			case 1: LISTAGEM();
+					break;
+			case 2: ENTRADA();
+					break;
+			case 4: EXCLUIR();
+					break;
+			case 5: ESVAZIAR();
+					break;
+			case 6: fim=1;
+					break;
+			default: printf("Opção inválida");
+					getch();
+			
+		}
+	}while(!(fim));
+	printf("Fim do programa");
+			getch();
+}
+void MenuPrincipal(){
+	system("cls");
+	printf("                   C L Í N I C A\n");
+	printf("\n1 - EXIBIR	FILA	DE	PACIENTES\n");
+	printf("\n2 - ADICIONAR PACIENTE \n");
+	printf("\n4 - ATENDER PACIENTE\n");
+	printf("\n5 - ESVAZIAR A FILA DE PACIENTES\n");
+	printf("\n6 - SAIR\n");
+	printf("\n DIGITE A SUA OPÇÃO...");
+	scanf("%d", &opcao);
+}
+void ENTRADA()
+{
+	telem paciente;
+	system ("cls");
+	printf("                   E N T R A D A   D E   D A D O S\n ");
+	printf("DIGITE O NOME DO PACIENTE:");
+	scanf("%s", &paciente.nome);
+	printf("DIGITE A IDADE DO PACIENTE:");
+	scanf("%d", &paciente.idade);
+
+		if(!(inserir (&PACIENTES, paciente)))
+		{
+			printf("NUMERO MAXIMO DE PACIENTES NA FILA");
+			getch();
+			return;
+		}
+		printf("\nO paciente %s foi inserido na fila.\n",paciente.nome);
+        getch();
+}
+void LISTAGEM()
+{
+	system("cls");
+	printf("			E X I B I R   A  F I L A  D E  P A C I E N T E S\n");
+	printf("Posição      Nome do Paciente         Idade\n");
+	if(vazia(PACIENTES))
+	{
+		printf("NENHUM PACIENTE CADASTRADO");
+		getch();
+		return;
+	}
+	imprimir (&PACIENTES);
+	getch();
+}
+void EXCLUIR()
+{
+	telem paciente;
+	system("cls");
+	printf("           E X C L U I R   P A C I E N T E\n");
+	if(!(remover(&PACIENTES, &paciente)))
+		{
+			printf("NENHUM PACIENTE NA FILA");
+			getch();
+			return;
+		}
+		else
+		{
+			printf("O paciente %s foi atendido.", paciente.nome);
+			
+		}
+		getch();
+}
+
+void ESVAZIAR()
+{
+	telem paciente;
+	int posicao;
+	system("cls");
+	if(vazia( PACIENTES))
+	{
+		printf("NENHUM PACIENTE NA FILA");
+		getch();
+		return;
+	}
+	
+     while (vazia(PACIENTES)==0)
+     {
+     	remover(&PACIENTES, &paciente);
+	 }
+	 printf("Todos os pacientes foram atendidos");
+	 getch();
+}
+
+void imprimir (tfila *F)
+{
+	int i;
+	for (i=(F->inicio); i<=(F->final);i++)
+	{
+		printf("%4d      %16s       %8d\n", i, F -> v[i].nome, F -> v[i].idade );
+	}
+	return;
+}
